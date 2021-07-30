@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bah.msd.projectdataservice.domain.Customer;
-import com.bah.msd.projectdataservice.repository.CustomersRepository;
+import com.bah.msd.projectdataservice.domain.Registration;
+import com.bah.msd.projectdataservice.repository.RegistrationsRepository;
 
 @RestController
-@RequestMapping("/customers")
-public class CustomerApi {
+@RequestMapping("/registrations")
+public class RegistrationApi {
 
 	@Autowired
-	CustomersRepository repo;
+	RegistrationsRepository repo;
 
 	@GetMapping
-	public Collection<Customer> getAllCustomers() {
-		return this.repo.getCustomerList();
+	public Collection<Registration> getAllRegistration() {
+		return this.repo.getRegistrationList();
 	}
 }

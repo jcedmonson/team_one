@@ -1,7 +1,5 @@
 package com.bah.msd.projectdataservice.domain;
 
-import java.util.HashMap;
-
 //import javax.persistence.Column;
 //import javax.persistence.Entity;
 //import javax.persistence.GeneratedValue;
@@ -15,36 +13,36 @@ public class Customer {
 
 //	@Id
 //	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	long id;
-	
+	private int id;
+
 //	@Column(name="CUSTOMER_NAME")
 	String name;
-	
-	String email;
-	
-	String password;
+
+	private String email;
+
+	private String password;
 
 	public Customer() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Customer(long id, String name, String password, String email) {
+
+	public Customer(int id, String name, String password, String email) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
 	}
-	
-	public String toJSON(){
+
+	public String toJSON() {
 		return "{\"id:\"" + id + ", \"name:\"" + name + ", \"password:\"" + password + ", \"email:\"" + email + " }";
 	}
-	
-	public long getId() {
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -63,12 +61,12 @@ public class Customer {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}	
+	}
 }
