@@ -32,8 +32,14 @@ public class EventsApi {
 	}
 
 	@GetMapping("/{eventId}")
-	public Optional<Event> getEventById(@PathVariable("eventId") Long id) {
-		return repo.findById(id);
+	public ResponseEntity<?> getEventById(@PathVariable("eventId") Long id) {
+		Optional<Event> event =  repo.findById(id);
+		
+		if (event.isPresent()) {
+			return ResponseEntity.ok().body(event);
+		} else {
+			return ResponseEntity.status(404).body(null);
+		}
 	}
 
 	@PostMapping
@@ -62,7 +68,7 @@ public class EventsApi {
 		}
 
 		newEvent = repo.save(newEvent);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(204).build();
 	}
 
 	@DeleteMapping("/{eventId}")
@@ -70,11 +76,11 @@ public class EventsApi {
 		Event event = repo.findById(id).orElse(null);
 		if (event == null) {
 
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.status(404).build();
 		}
 
 		repo.delete(event);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(204).build();
 	}
 }

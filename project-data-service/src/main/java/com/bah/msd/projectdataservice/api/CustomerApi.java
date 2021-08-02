@@ -30,43 +30,54 @@ public class CustomerApi {
 	public Iterable<Customer> getAllCustomers() {
 		return this.repo.findAll();
 	}
-	
+
 	@GetMapping("/{customerId}")
-	public Optional<Customer> getCustomerById(@PathVariable("customerId") long id){
-			return repo.findById(id);
+	public ResponseEntity<?> getCustomerById(@PathVariable("customerId") long id) {
+		Optional<Customer> customer = repo.findById(id);
+
+		if (customer.isPresent()) {
+			return ResponseEntity.ok().body(customer);
+		} else {
+			return ResponseEntity.status(404).body(null);
+		}
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<?> addCustomer(@RequestBody Customer newCustomer, UriComponentsBuilder uri ) {
-		if (newCustomer.getId() != 0 || newCustomer.getName() == null || newCustomer.getEmail() == null || newCustomer.getPassword() == null) {
+	public ResponseEntity<?> addCustomer(@RequestBody Customer newCustomer, UriComponentsBuilder uri) {
+		if (newCustomer.getId() != 0 || newCustomer.getName() == null || newCustomer.getEmail() == null
+				|| newCustomer.getPassword() == null) {
 			return ResponseEntity.badRequest().build();
 		}
 		newCustomer = repo.save(newCustomer);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newCustomer.getId()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newCustomer.getId()).toUri();
 		ResponseEntity<?> response = ResponseEntity.created(location).build();
+
 		return response;
 	}
-	
+
 	@PutMapping("/{customerId}")
 	public ResponseEntity<?> putCustomer(@RequestBody Customer newCustomer, @PathVariable("customerId") long customerId) {
-		if (newCustomer.getId() != customerId || newCustomer.getName() == null || newCustomer.getEmail() == null || newCustomer.getPassword() == null) {
-			return ResponseEntity.badRequest().build();		
+		if (newCustomer.getId() != customerId || newCustomer.getName() == null || newCustomer.getEmail() == null
+				|| newCustomer.getPassword() == null) {
+			return ResponseEntity.badRequest().build();
 		}
 		newCustomer = repo.save(newCustomer);
-		return ResponseEntity.ok().build();
+
+		return ResponseEntity.status(204).build();
 	}
-	
+
 	@DeleteMapping("/{customerId}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable("customerId") long id) {
 		Customer customer = repo.findById(id).orElse(null);
 		if (customer == null) {
-			
-			return ResponseEntity.badRequest().build();
+
+			return ResponseEntity.status(404).build();
 		}
-		
+
 		repo.delete(customer);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(204).build();
 	}
-	
+
 }

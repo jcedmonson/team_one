@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.bah.msd.projectdataservice.domain.Customer;
 import com.bah.msd.projectdataservice.domain.Registration;
 import com.bah.msd.projectdataservice.repository.RegistrationsRepository;
 
@@ -32,8 +33,14 @@ public class RegistrationApi {
 	}
 
 	@GetMapping("/{registrationId}")
-	public Optional<Registration> getRegistrationById(@PathVariable("registrationId") Long id) {
-		return repo.findById(id);
+	public ResponseEntity<?> getRegistrationById(@PathVariable("registrationId") Long id) {
+		Optional<Registration> registration = repo.findById(id);
+
+		if (registration.isPresent()) {
+			return ResponseEntity.ok().body(registration);
+		} else {
+			return ResponseEntity.status(404).body(null);
+		}
 	}
 
 	@PostMapping
@@ -53,9 +60,7 @@ public class RegistrationApi {
 	}
 
 	@PutMapping("/{registrationId}")
-	public ResponseEntity<?> updateRegistration(@RequestBody Registration newRegistration,
-			@PathVariable("registrationId") long registrationId) {
-
+	public ResponseEntity<?> updateRegistration(@RequestBody Registration newRegistration, @PathVariable("registrationId") long registrationId) {
 		if (newRegistration.getId() != registrationId || newRegistration.getEvent_id() <= 0
 				|| newRegistration.getCustomer_id() <= 0 || newRegistration.getRegistration_date() == null
 				|| newRegistration.getNotes() == null) {
@@ -64,7 +69,7 @@ public class RegistrationApi {
 		}
 
 		newRegistration = repo.save(newRegistration);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(204).build();
 	}
 
 	@DeleteMapping("/{registrationId}")
@@ -72,11 +77,11 @@ public class RegistrationApi {
 		Registration registration = repo.findById(id).orElse(null);
 		if (registration == null) {
 
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.status(404).build();
 		}
 
 		repo.delete(registration);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(204).build();
 	}
 }
