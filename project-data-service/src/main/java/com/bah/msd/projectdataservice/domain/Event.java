@@ -1,9 +1,19 @@
 package com.bah.msd.projectdataservice.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "EVENTS")
 public class Event {
 
-	private int id;
-	private String code;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	private String event_code;
 	private String title;
 	private String description;
 
@@ -11,28 +21,28 @@ public class Event {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Event(int id, String code, String title, String description) {
+	public Event(long id, String code, String title, String description) {
 		super();
 		this.id = id;
-		this.code = code;
+		this.event_code = code;
 		this.title = title;
 		this.description = description;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
 	public String getCode() {
-		return code;
+		return event_code;
 	}
 
 	public void setCode(String code) {
-		this.code = code;
+		this.event_code = code;
 	}
 
 	public String getTitle() {

@@ -2,11 +2,21 @@ package com.bah.msd.projectdataservice.domain;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "REGISTRATIONS")
 public class Registration {
 
-	private int id;
-	private int event_id;
-	private int customer_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	private long event_id;
+	private long customer_id;
 	private LocalDate registration_date;
 	private String notes;
 
@@ -14,7 +24,7 @@ public class Registration {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registration(int id, int event_id, int customer_id, LocalDate registration_date, String notes) {
+	public Registration(long id, long event_id, long customer_id, LocalDate registration_date, String notes) {
 		super();
 		this.id = id;
 		this.event_id = event_id;
@@ -23,27 +33,27 @@ public class Registration {
 		this.notes = notes;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public int getEvent_id() {
+	public long getEvent_id() {
 		return event_id;
 	}
 
-	public void setEvent_id(int event_id) {
+	public void setEvent_id(long event_id) {
 		this.event_id = event_id;
 	}
 
-	public int getCustomer_id() {
+	public long getCustomer_id() {
 		return customer_id;
 	}
 
-	public void setCustomer_id(int customer_id) {
+	public void setCustomer_id(long customer_id) {
 		this.customer_id = customer_id;
 	}
 
