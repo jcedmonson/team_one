@@ -1,21 +1,21 @@
 package com.bah.msd.projectdataservice.domain;
 
-//import javax.persistence.Column;
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
-//import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-//@Entity
-//@Table(name="CUSTOMERS")
+@Entity
+@Table(name="CUSTOMERS")
 public class Customer {
 
-//	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
 
-//	@Column(name="CUSTOMER_NAME")
+	@Column(name="CUSTOMER_NAME")
 	String name;
 
 	private String email;
@@ -26,7 +26,7 @@ public class Customer {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(int id, String name, String password, String email) {
+	public Customer(long id, String name, String password, String email) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -38,11 +38,11 @@ public class Customer {
 		return "{\"id:\"" + id + ", \"name:\"" + name + ", \"password:\"" + password + ", \"email:\"" + email + " }";
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
