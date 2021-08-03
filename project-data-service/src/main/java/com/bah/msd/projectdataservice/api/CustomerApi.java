@@ -17,6 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bah.msd.projectdataservice.domain.Customer;
+import com.bah.msd.projectdataservice.jwt.TokenRequestData;
+import com.bah.msd.projectdataservice.jwt.TokenResponseData;
 import com.bah.msd.projectdataservice.repository.CustomersRepository;
 
 @RestController
@@ -54,6 +56,21 @@ public class CustomerApi {
 		ResponseEntity<?> response = ResponseEntity.created(location).build();
 
 		return response;
+	}
+	
+	@PostMapping("/authenticate")
+	public ResponseEntity<?> checkCredentials(@RequestBody TokenRequestData request) {
+		
+		Optional<Customer> customer = repo.findByNameIgnoringCase(request.getName());
+		
+		TokenResponseData response = new TokenResponseData();
+		
+		if (customer.isPresent() && customer.get().getPassword().equals(request.getPassword())) {
+			response.setScopes("com.bah.msd.projectdataservice");
+			response.setAuthenticated(true);
+		}
+
+		return ResponseEntity.ok().body(response);		
 	}
 
 	@PutMapping("/{customerId}")
