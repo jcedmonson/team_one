@@ -1,4 +1,4 @@
-package com.bah.msd.projectdataservice.filter;
+package com.bah.msd.projectdataservice.filters;
 
 import java.io.IOException;
 
@@ -18,9 +18,9 @@ import com.bah.msd.projectdataservice.jwt.JWTUtil;
 @Component
 public class AuthFilter implements Filter {
 
-	JWTUtil jwtUtil = new JWTHelper();
-
 	private String api_scope = "com.bah.msd.projectdataservice";
+
+	JWTUtil jwtUtil = new JWTHelper();
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -29,13 +29,14 @@ public class AuthFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String uri = req.getRequestURI();
-		if (uri.contains("/customers") && req.getMethod().equalsIgnoreCase("post") ) {
+		if (uri.contains("/customers") && req.getMethod().equalsIgnoreCase("post")) {
 			// continue on to get-token endpoint
 			chain.doFilter(request, response);
 			return;
 		} else {
 			// check JWT token
 			String authheader = req.getHeader("authorization");
+			
 			if (authheader != null && authheader.length() > 7 && authheader.startsWith("Bearer")) {
 				String jwt_token = authheader.substring(7, authheader.length());
 				if (jwtUtil.verifyToken(jwt_token)) {

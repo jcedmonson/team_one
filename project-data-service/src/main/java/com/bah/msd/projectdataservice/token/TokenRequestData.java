@@ -1,4 +1,4 @@
-package com.bah.msd.projectauthservice.jwt;
+package com.bah.msd.projectdataservice.token;
 
 public class TokenRequestData {
 	String name;

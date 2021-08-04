@@ -10,26 +10,25 @@ import org.springframework.web.client.RestTemplate;
 
 import com.bah.msd.projectauthservice.jwt.JWTHelper;
 import com.bah.msd.projectauthservice.jwt.JWTUtil;
-import com.bah.msd.projectauthservice.jwt.Token;
 
 @RestController
 @RequestMapping("/register")
 public class RegisterApi {
-	
+
+	private static final String createCustomerEndpoint = "http://localhost:8080/api/customers";
+
 	JWTUtil jwtUtil = new JWTHelper();
-	
+
 	@PostMapping
 	public ResponseEntity<?> register(@RequestBody Object newCustomer) {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<?> result = restTemplate.postForEntity("http://localhost:8080/api/customers", newCustomer, ResponseEntity.class);
-		
+
+		ResponseEntity<?> result = new RestTemplate().postForEntity(createCustomerEndpoint, newCustomer,
+				ResponseEntity.class);
+
 		if (result.getStatusCode() == HttpStatus.CREATED) {
-			Token token = jwtUtil.createToken("com.bah.msd.projectdataservice");
-			
-			return ResponseEntity.ok(token);
+			return ResponseEntity.ok().build();
 		}
-		
+
 		return ResponseEntity.badRequest().build();
 	}
 }
