@@ -22,21 +22,13 @@ public class RegisterApi {
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> register(@RequestBody Object newCustomer) {
 
-<<<<<<< HEAD
 		ResponseEntity<?> result = new RestTemplate().postForEntity(createCustomerEndpoint, newCustomer,
 				String.class);
-=======
-		try {
-			ResponseEntity<?> result = new RestTemplate().postForEntity(createCustomerEndpoint, newCustomer,
-				ResponseEntity.class);
->>>>>>> 0c074f8034039f1e863c4b102d16b99ed1d4e206
 
-			if (result.getStatusCode() == HttpStatus.CREATED) {
-				return ResponseEntity.ok().build();
-			}
-		} catch (Exception e){
-			System.out.println(e);
+		if (result.getStatusCode() == HttpStatus.CREATED) {
+			return ResponseEntity.ok().build();
 		}
+		
 		return ResponseEntity.badRequest().build();
 	}
 }
