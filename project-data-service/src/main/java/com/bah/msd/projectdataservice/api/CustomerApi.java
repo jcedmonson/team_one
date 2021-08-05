@@ -47,7 +47,7 @@ public class CustomerApi {
 	public ResponseEntity<?> addCustomer(@RequestBody Customer newCustomer, UriComponentsBuilder uri) {
 		if (newCustomer.getId() != 0 || newCustomer.getName() == null || newCustomer.getEmail() == null
 				|| newCustomer.getPassword() == null) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.ok("Could not create customer");
 		}
 		newCustomer = repo.save(newCustomer);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -63,10 +63,10 @@ public class CustomerApi {
 		Optional<Customer> customer = repo.findByNameIgnoringCase(request.getName());
 		
 		if (customer.isPresent() && customer.get().getPassword().equals(request.getPassword())) {
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok("SUCCESS");
 		}
 
-		return ResponseEntity.status(401).build();		
+		return ResponseEntity.ok("Username and password did not match");		
 	}
 
 	@PutMapping("/{customerId}")

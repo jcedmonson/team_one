@@ -1,6 +1,5 @@
 package com.bah.msd.projectauthservice.api;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +26,9 @@ public class TokenApi {
 	public ResponseEntity<?> getToken(@RequestBody TokenRequestData tokenRequestData) {
 
 		ResponseEntity<?> result = new RestTemplate().postForEntity(authEndpoint, tokenRequestData,
-				ResponseEntity.class);
+				String.class);
 
-		if (result.getStatusCode() == HttpStatus.OK) {
+		if (result.getBody().equals("SUCCESS")) {
 			Token token = jwtUtil.createToken(api_scope);
 
 			return ResponseEntity.ok(token);

@@ -19,11 +19,11 @@ public class RegisterApi {
 
 	JWTUtil jwtUtil = new JWTHelper();
 
-	@PostMapping
+	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> register(@RequestBody Object newCustomer) {
 
 		ResponseEntity<?> result = new RestTemplate().postForEntity(createCustomerEndpoint, newCustomer,
-				ResponseEntity.class);
+				String.class);
 
 		if (result.getStatusCode() == HttpStatus.CREATED) {
 			return ResponseEntity.ok().build();
