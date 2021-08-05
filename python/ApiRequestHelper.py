@@ -25,4 +25,10 @@ class ApiRequestHelper:
                             path="/account/token",
                             body=self.tokenBody)
         return resp.json()['token']
-        
+
+    def getUnloadedAuth(self):
+        return ApiRequests(self.authPath)
+
+    def getLoadedAuth(self):
+        ar = ApiRequests(self.authPath)
+

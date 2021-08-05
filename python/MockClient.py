@@ -48,11 +48,35 @@ class MockClient(ApiRequestHelper):
         else:
             raise Exception(f"* POST {self.dataPath}{path} {resp.status_code}:FAILED.")
 
+    def unAuthPost(self, path, body, status_code):
+        unloaded_auth_service = self.getUnloadedAuth()
+        resp = unloaded_auth_service.post(path, body)
+        if resp.status_code == status_code:
+            print(f"* POST {self.authPath}{path} {resp.status_code}:working as intended.")
+        else:
+            raise Exception(f"* POST {self.dataPath}{path} {resp.status_code}:FAILED.")
+
 
     
 if __name__ == "__main__":
     try:
         mc = MockClient()
+
+        print("\n - - - Testing User Login Good Credentials - - - ")
+        body = {"name": "bruce", "password": "pass"}
+        print(f"      * Passing correct login body {body}")
+        mc.unAuthPost("/account/token", body, 200)
+
+        print("\n - - - Testing User Login Bad Credentials - - - ")
+        body = {"name": "bruce", "password": "supercoolpassword"}
+        print(f"      * Passing incorrect login body {body}")
+        mc.unAuthPost("/account/token", body, 401)
+        
+        
+        print("\n - - - Testing Login, No Account - - - ")
+        body = {"name": "SomeRandomUser", "password": "SHEEESSSHH"}
+        print(f"      * Passing incorrect login body {body}")
+        mc.unAuthPost("/account/token", body, 401)
 
         print("\n - - - CRUD Verification - - -\n")
         ### Customers
@@ -104,6 +128,8 @@ if __name__ == "__main__":
         ### User Registration
         print("\n - - - Registration Verification - - -\n")
         new_user = {'name': 'elkin', 'email': 'elkin@gmail.com', 'password': 'pass'}
+        print(f"      * Passing new user for creation {new_user}")
         mc.register("/account/register", new_user)
+
     except Exception as e:
         print(e)
