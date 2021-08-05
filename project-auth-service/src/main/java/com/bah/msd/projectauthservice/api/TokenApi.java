@@ -26,15 +26,18 @@ public class TokenApi {
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> getToken(@RequestBody TokenRequestData tokenRequestData) {
 
-		ResponseEntity<?> result = new RestTemplate().postForEntity(authEndpoint, tokenRequestData,
+		try {
+			ResponseEntity<?> result = new RestTemplate().postForEntity(authEndpoint, tokenRequestData,
 				ResponseEntity.class);
 
-		if (result.getStatusCode() == HttpStatus.OK) {
-			Token token = jwtUtil.createToken(api_scope);
-
-			return ResponseEntity.ok(token);
+			if (result.getStatusCode() == HttpStatus.OK) {
+				Token token = jwtUtil.createToken(api_scope);
+	
+				return ResponseEntity.ok(token);
+			}
+		} catch (Exception e)  {
+			System.out.println(e);
 		}
-
 		return ResponseEntity.status(401).build();
 	}
 }

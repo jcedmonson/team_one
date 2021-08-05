@@ -22,13 +22,16 @@ public class RegisterApi {
 	@PostMapping
 	public ResponseEntity<?> register(@RequestBody Object newCustomer) {
 
-		ResponseEntity<?> result = new RestTemplate().postForEntity(createCustomerEndpoint, newCustomer,
+		try {
+			ResponseEntity<?> result = new RestTemplate().postForEntity(createCustomerEndpoint, newCustomer,
 				ResponseEntity.class);
 
-		if (result.getStatusCode() == HttpStatus.CREATED) {
-			return ResponseEntity.ok().build();
+			if (result.getStatusCode() == HttpStatus.CREATED) {
+				return ResponseEntity.ok().build();
+			}
+		} catch (Exception e){
+			System.out.println(e);
 		}
-
 		return ResponseEntity.badRequest().build();
 	}
 }
