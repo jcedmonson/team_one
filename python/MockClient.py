@@ -51,56 +51,59 @@ class MockClient(ApiRequestHelper):
 
     
 if __name__ == "__main__":
-    mc = MockClient()
+    try:
+        mc = MockClient()
 
-    print("\n - - - CRUD Verification - - -\n")
-    ### Customers
-    # All Customers
-    mc.getObject("/api/customers")
-    #Single Customer
-    mc.getObject("/api/customers/1")
-    # Add Customer
-    sample_customer = {'name': 'bryan', 'email': 'bryan@gmail.com', 'password': 'pass'}
-    mc.postObject("/api/customers", sample_customer)
-    # Update Customer
-    updated_customer = {'id': 1, 'name': 'Bruce', 'email': 'bruce@gmail.com', 'password': 'pass'}
-    mc.putObject("/api/customers/1", updated_customer)
-    # Remove Customer
-    remove_customer = {'id': 1, 'name': 'Bruce', 'email': 'bruce@gmail.com', 'password': 'pass'}
-    mc.deleteObject("/api/customers/1", remove_customer)
+        print("\n - - - CRUD Verification - - -\n")
+        ### Customers
+        # All Customers
+        mc.getObject("/api/customers")
+        #Single Customer
+        mc.getObject("/api/customers/1")
+        # Add Customer
+        sample_customer = {'name': 'bryan', 'email': 'bryan@gmail.com', 'password': 'pass'}
+        mc.postObject("/api/customers", sample_customer)
+        # Update Customer
+        updated_customer = {'id': 1, 'name': 'Bruce', 'email': 'bruce@gmail.com', 'password': 'pass'}
+        mc.putObject("/api/customers/1", updated_customer)
+        # Remove Customer
+        remove_customer = {'id': 1, 'name': 'Bruce', 'email': 'bruce@gmail.com', 'password': 'pass'}
+        mc.deleteObject("/api/customers/1", remove_customer)
 
 
-    ### Registrations
-    # All Registrations
-    mc.getObject("/api/registrations")
-    #Single Registration
-    mc.getObject("/api/registrations/1")
-    # Add Registration
-    sample_registration = {'id': 0, 'event_id': 1, 'customer_id': 100, 'registration_date': '2021-04-20', 'notes': 'SHEESH'}
-    mc.postObject("/api/registrations", sample_registration)
-    # Update Registration
-    updated_registration = {'id': 1, 'event_id': 1, 'customer_id': 1, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
-    mc.putObject("/api/registrations/1", updated_registration)
-    # Remove Registration
-    remove_registration = {'id': 1, 'event_id': 1, 'customer_id': 1, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
-    mc.deleteObject("/api/registrations/1", remove_registration)
+        ### Registrations
+        # All Registrations
+        mc.getObject("/api/registrations")
+        #Single Registration
+        mc.getObject("/api/registrations/1")
+        # Add Registration
+        sample_registration = {'id': 0, 'event_id': 1, 'customer_id': 100, 'registration_date': '2021-04-20', 'notes': 'SHEESH'}
+        mc.postObject("/api/registrations", sample_registration)
+        # Update Registration
+        updated_registration = {'id': 1, 'event_id': 1, 'customer_id': 1, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
+        mc.putObject("/api/registrations/1", updated_registration)
+        # Remove Registration
+        remove_registration = {'id': 1, 'event_id': 1, 'customer_id': 1, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
+        mc.deleteObject("/api/registrations/1", remove_registration)
 
-    ### Events
-    # All Events
-    mc.getObject("/api/events")
-    #Single Event
-    mc.getObject("/api/events/1")
-    # Add Event
-    sample_event = {'id': 0, 'title': 'Cash-Money', 'description': 'Lectures and exhibits covering all Beat Making topics', 'code': '42069'}
-    mc.postObject( "/api/events", sample_event)
-    # Update Event
-    updated_event = {'id': 1, 'title': 'All-Java Conference', 'description': 'Lectures and exhibits covering all Java topics', 'code': 'CNF001'}
-    mc.putObject("/api/events/1", updated_event)
-    # Remove Event
-    remove_event = {'id': 1, 'title': 'All-Java Conference', 'description': 'Lectures and exhibits covering all Java topics', 'code': 'CNF001'}
-    mc.deleteObject("/api/events/1", remove_event)
+        ### Events
+        # All Events
+        mc.getObject("/api/events")
+        #Single Event
+        mc.getObject("/api/events/1")
+        # Add Event
+        sample_event = {'id': 0, 'title': 'Cash-Money', 'description': 'Lectures and exhibits covering all Beat Making topics', 'code': '42069'}
+        mc.postObject( "/api/events", sample_event)
+        # Update Event
+        updated_event = {'id': 1, 'title': 'All-JS Conference', 'description': 'Lectures and exhibits covering all JS topics', 'code': 'CNF001'}
+        mc.putObject("/api/events/1", updated_event)
+        # Remove Event
+        remove_event = {'id': 1, 'title': 'All-JS Conference', 'description': 'Lectures and exhibits covering all JS topics', 'code': 'CNF001'}
+        mc.deleteObject("/api/events/1", remove_event)
 
-    ### User Registration
-    print("\n - - - Registration Verification - - -\n")
-    new_user = {'name': 'elkin', 'email': 'elkin@gmail.com', 'password': 'pass'}
-    mc.register("/account/register", new_user)
+        ### User Registration
+        print("\n - - - Registration Verification - - -\n")
+        new_user = {'name': 'elkin', 'email': 'elkin@gmail.com', 'password': 'pass'}
+        mc.register("/account/register", new_user)
+    except Exception as e:
+        print(e)
