@@ -44,7 +44,7 @@ class MockClient(ApiRequestHelper):
     def register(self, path, body):
         resp = self.authRequests.post(path, body)
         if resp.status_code == 200:
-            print(f"* POST {self.dataPath}{path} {resp.status_code}:working as intended.")
+            print(f"* POST {self.authPath}{path} {resp.status_code}:working as intended.")
         else:
             raise Exception(f"* POST {self.dataPath}{path} {resp.status_code}:FAILED.")
 
