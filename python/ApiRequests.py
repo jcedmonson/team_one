@@ -74,7 +74,7 @@ class ApiRequests:
                     }
                 )
         else:
-            resp = put(
+            resp = delete(
                 self.generatePath(path=path), 
                 json=body,
                 headers = {'Content-Type': 'application/json'}
