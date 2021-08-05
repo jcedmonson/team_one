@@ -79,6 +79,20 @@ if __name__ == "__main__":
         mc.unAuthPost("/account/token", body, 401)
 
         print("\n - - - CRUD Verification - - -\n")
+         ### Registrations
+        # All Registrations
+        mc.getObject("/api/registrations")
+        #Single Registration
+        mc.getObject("/api/registrations/1")
+        # Add Registration
+        sample_registration = {'id': 0, 'event_id': 2, 'customer_id': 2, 'registration_date': '2021-04-20', 'notes': 'SHEESH'}
+        mc.postObject("/api/registrations", sample_registration)
+        # Update Registration
+        updated_registration = {'id': 1, 'event_id': 2, 'customer_id': 2, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
+        mc.putObject("/api/registrations/1", updated_registration)
+        # Remove Registration
+        mc.deleteObject("/api/registrations/1", {})
+        
         ### Customers
         # All Customers
         mc.getObject("/api/customers")
@@ -91,24 +105,7 @@ if __name__ == "__main__":
         updated_customer = {'id': 1, 'name': 'Bruce', 'email': 'bruce@gmail.com', 'password': 'pass'}
         mc.putObject("/api/customers/1", updated_customer)
         # Remove Customer
-        remove_customer = {'id': 1, 'name': 'Bruce', 'email': 'bruce@gmail.com', 'password': 'pass'}
-        mc.deleteObject("/api/customers/1", remove_customer)
-
-
-        ### Registrations
-        # All Registrations
-        mc.getObject("/api/registrations")
-        #Single Registration
-        mc.getObject("/api/registrations/1")
-        # Add Registration
-        sample_registration = {'id': 0, 'event_id': 1, 'customer_id': 100, 'registration_date': '2021-04-20', 'notes': 'SHEESH'}
-        mc.postObject("/api/registrations", sample_registration)
-        # Update Registration
-        updated_registration = {'id': 1, 'event_id': 1, 'customer_id': 1, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
-        mc.putObject("/api/registrations/1", updated_registration)
-        # Remove Registration
-        remove_registration = {'id': 1, 'event_id': 1, 'customer_id': 1, 'registration_date': '2019-01-15', 'notes': 'SSSSSHHHHHHEEEESSSSHH'}
-        mc.deleteObject("/api/registrations/1", remove_registration)
+        mc.deleteObject("/api/customers/1", {})
 
         ### Events
         # All Events
@@ -122,8 +119,7 @@ if __name__ == "__main__":
         updated_event = {'id': 1, 'title': 'All-JS Conference', 'description': 'Lectures and exhibits covering all JS topics', 'code': 'CNF001'}
         mc.putObject("/api/events/1", updated_event)
         # Remove Event
-        remove_event = {'id': 1, 'title': 'All-JS Conference', 'description': 'Lectures and exhibits covering all JS topics', 'code': 'CNF001'}
-        mc.deleteObject("/api/events/1", remove_event)
+        mc.deleteObject("/api/events/3", {})
 
         ### User Registration
         print("\n - - - Registration Verification - - -\n")
