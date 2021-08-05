@@ -1,3 +1,5 @@
 .DS_Store
 /.metadata/
 project-react-client/package-lock.json
+.vscode/
+python/__pycache__/
