@@ -1,4 +1,5 @@
-node {
+pipeline {
+	agent any
     stage ("Checkout DataApi"){
 		git branch: 'main',
 			url: '/home/osboxes/Desktop/Project/team_one'
@@ -47,5 +48,12 @@ node {
     	sh 'gradle -b project-auth-service/build.gradle build -x test'
 	}
     
+    
+    stage('run python script') { 
+		steps {
+			sh "echo 'test'"
+		}
+    }
+
     
 }
