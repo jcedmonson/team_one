@@ -56,11 +56,24 @@ class MockClient(ApiRequestHelper):
         else:
             raise Exception(f"* POST {self.dataPath}{path} {resp.status_code}:FAILED.")
 
+    def unAuthGet(self, path, body, status_code):
+        unloaded_auth_service = self.getUnloadedAuth()
+        resp = unloaded_auth_service.get(path)
+        if resp.status_code == status_code:
+            print(f"* GET {self.authPath}{path} {resp.status_code}:working as intended.")
+        else:
+            raise Exception(f"* GET {self.dataPath}{path} {resp.status_code}:FAILED.")
+
 
     
 if __name__ == "__main__":
     try:
         mc = MockClient()
+
+        print("\n - - - AUTH Verification - - -\n")
+
+        print("- - - Verifying Account Service Activity - - - ")
+        mc.unAuthGet("/account/", {}, 200)
 
         print("\n - - - Testing User Login Good Credentials - - - ")
         body = {"name": "bruce", "password": "pass"}
