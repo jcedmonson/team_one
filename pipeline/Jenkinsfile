@@ -20,8 +20,7 @@ pipeline {
 		stage('Deploy DataApi'){
 			steps {
 				sh 'gradle -b project-data-service/build.gradle build -x test'
-			}
-			steps {
+			
 				sh 'TODO - run app AuthAPI as java'
 			}
 		}
@@ -44,8 +43,7 @@ pipeline {
 		stage('Deploy AuthApi'){
 			steps {
 				sh 'gradle -b project-auth-service/build.gradle build -x test'
-			}
-			steps {
+			
 			    sh 'TODO - run app AuthAPI as java'
 			}
 
