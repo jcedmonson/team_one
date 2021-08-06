@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'echo "Python Test"'
                 sh '''
-                    python3 print(3*3)
+                    python3 --version
                 '''
             }
         }
