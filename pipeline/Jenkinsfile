@@ -1,7 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+	    stage ("Checkout DataApi"){
+			git branch: 'main',
+				url: '/home/osboxes/Desktop/Project/team_one'
+	    }
+	    stage ("Gradle Build - DataApi") {
+			sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle clean build'
+	    }
+	    
+	    stage ("Gradle Bootjar-Package - DataApi") {
+			sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
+	    }
+		stage('Deploy DataApi'){
+	    	sh 'gradle -b project-data-service/build.gradle build -x test'
+		}	    
+	    
+	    
+        stage('Endpoints Testing - Python Mock') {
             steps {
                 sh 'echo "Python Test"'
                 sh '''
