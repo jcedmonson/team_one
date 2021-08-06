@@ -21,6 +21,9 @@ pipeline {
 			steps {
 				sh 'gradle -b project-data-service/build.gradle build -x test'
 			}
+			steps {
+				sh 'TODO - run app AuthAPI as java'
+			}
 		}
 		stage("Checkout AuthApi"){
 	    	steps {
@@ -42,6 +45,10 @@ pipeline {
 			steps {
 				sh 'gradle -b project-auth-service/build.gradle build -x test'
 			}
+			steps {
+			    sh 'TODO - run app AuthAPI as java'
+			}
+
 		}	    	    
         stage('Endpoints Testing - Python MockClient') {
             steps {
