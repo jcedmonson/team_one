@@ -1,6 +1,7 @@
 node {
     stage ("Checkout DataApi"){
-        git url: '/home/osboxes/Desktop/Project/team_one/'
+	git branch: 'main',
+		url: '/home/osboxes/Desktop/Project/team_one'
     }
     
     stage ("Gradle Build - DataApi") {
