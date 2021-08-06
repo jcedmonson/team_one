@@ -1,27 +1,28 @@
 node {
     stage ("Checkout DataApi"){
-	git branch: 'main',
-		url: '/home/osboxes/Desktop/Project/team_one'
+		git branch: 'main',
+			url: '/home/osboxes/Desktop/Project/team_one'
     }
     
     stage ("Gradle Build - DataApi") {
-	sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle clean build'
+		sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle clean build'
     }
     
     stage ("Gradle Bootjar-Package - DataApi") {
-	sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
+		sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
     }
 
     stage('User Acceptance Test') {
-
 	   def response= input message: 'Is this build good to go?',
 	   parameters: [choice(choices: 'Yes\nNo', 
 	   description: '', name: 'Pass')]
 	
 	  if(response=="Yes") {
 	    stage('Deploy') {
-	      sh 'gradle -b MsdProjectDataService/build.gradle build -x test'
+	      sh 'gradle -b project-data-service/build.gradle build -x test'
         }
       }
-    }	
+    }
+    
+    	
 }
