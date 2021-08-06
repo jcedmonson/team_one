@@ -21,7 +21,28 @@ pipeline {
 			steps {
 				sh 'gradle -b project-data-service/build.gradle build -x test'
 			}
-		}	    
+		}
+		stage("Checkout AuthApi"){
+	    	steps {
+	    	    git branch: 'main',
+				url: '/home/osboxes/Desktop/Project/team_one'
+	    	}
+	    }
+	    stage ("Gradle Build - AuthApi") {
+	    	steps {
+				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle clean build'
+			}
+	    }
+	    stage ("Gradle Bootjar-Package - AuthApi") {
+	    	steps {
+				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle bootjar'
+			}
+	    }
+		stage('Deploy AuthApi'){
+			steps {
+				sh 'gradle -b project-auth-service/build.gradle build -x test'
+			}
+		}	    	    
         stage('Endpoints Testing - Python MockClient') {
             steps {
                 sh 'echo "Endpoints Testing - Python MockClient"'
