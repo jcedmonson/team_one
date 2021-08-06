@@ -1,19 +1,35 @@
 pipeline {
     agent any
     stages {
-	    stage ("Checkout DataApi"){
-			git branch: 'main',
+	    stage("Checkout DataApi"){
+	    	steps {
+	    	    git branch: 'main',
 				url: '/home/osboxes/Desktop/Project/team_one'
+	    	}
+
+			
 	    }
 	    stage ("Gradle Build - DataApi") {
-			sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle clean build'
+	    	steps {
+	    	    
+	    	
+
+				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle clean build'
+			}
 	    }
 	    
 	    stage ("Gradle Bootjar-Package - DataApi") {
-			sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
+	    	steps {
+	    	    
+	    	
+
+				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
+			}
 	    }
 		stage('Deploy DataApi'){
-	    	sh 'gradle -b project-data-service/build.gradle build -x test'
+			steps {
+				sh 'gradle -b project-data-service/build.gradle build -x test'
+			}
 		}	    
 	    
 	    
