@@ -23,9 +23,29 @@ node {
 //        }
 //      }
 //    }
-	stage('Deploy'){
+	stage('Deploy DataApi'){
     	sh 'gradle -b project-data-service/build.gradle build -x test'
 	}
   
-    	
+  
+  
+  
+    stage ("Checkout AuthApi"){
+		git branch: 'main',
+			url: '/home/osboxes/Desktop/Project/team_one'
+    }
+    
+    stage ("Gradle Build - AuthApi") {
+		sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle clean build'
+    }
+    
+    stage ("Gradle Bootjar-Package - DataApi") {
+		sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle bootjar'
+    }
+    
+    stage('Deploy AuthApi'){
+    	sh 'gradle -b project-auth-service/build.gradle build -x test'
+	}
+    
+    
 }
