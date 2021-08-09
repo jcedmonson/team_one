@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max-width="500px" outlined>
+    <v-dialog max-width="500px" outlined v-model="showDialog">
      <template v-slot:activator="{ on }">
        <!-- <v-btn  v-on="on" class="success">Add New Project</v-btn> -->
        <v-btn outlined color=#00BCD4 v-on="on">
@@ -75,12 +75,17 @@
           alert: false,
           username: null,
           password: null,
-          email: null
+          email: null,
+          showDialog: false,
       } 
     },
     components: {},
 
     methods :{
+
+    close(){
+      this.showDialog = false;
+    },
 
     toggleAlert(alert){
         this.alert = alert;
@@ -103,6 +108,8 @@
           ).then(response => {
           if (response.status == 200) {
               this.toggleAlert("Account Created");
+              this.clearForm()
+              this.close();
             // follow on re-direction to login
           } else {
             this.toggleAlert("Creation Failed")

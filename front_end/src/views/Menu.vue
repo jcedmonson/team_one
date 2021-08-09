@@ -10,7 +10,8 @@
       </v-col>
       <v-col>
         <v-container class="text-right">
-          <v-btn color="white" outlined dense small elevation="2">{{user[0]}}</v-btn>
+          <!-- <v-btn color="white" outlined dense small elevation="2">{{user[0]}}</v-btn> -->
+          <profile/>
         </v-container>
       </v-col>
     </v-row>
@@ -72,6 +73,7 @@
   import customer from '../components/Customer.vue'
   import event from '../components/Event.vue'
   import registration from '../components/Registration.vue'
+  import profile from '../components/Profile.vue'
   export default {
     name: 'simplename',
     props: {},
@@ -81,7 +83,8 @@
       remove,
       customer,
       event,
-      registration
+      registration,
+      profile
     },
 
     watch:{
