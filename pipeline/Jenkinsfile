@@ -66,6 +66,8 @@ pipeline {
             steps {
                 sh 'echo "Endpoints Testing - Python MockClient"'
                 sh 'python3 --version'
+                sh 'java -jar /home/osboxes/Desktop/Project/team_one/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &'
+                sh 'java -jar /home/osboxes/Desktop/Project/team_one/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &'
                 sh '''
                     python3 ~/Desktop/Project/team_one/python/MockClient.py
                 '''
