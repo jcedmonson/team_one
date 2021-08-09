@@ -42,10 +42,12 @@
       <remove :selection="{item}"/>
     </template>
     </v-data-table>
-    <v-component class="text-right">
+    <v-component class="text-right" v-if="ready">
       <customer v-on:reload="reload($event)"/>
       <event v-on:reload="reload($event)"/>
-      <registration v-on:reload="reload($event)"/>
+      <registration v-on:reload="reload($event)"
+                    :customerApi="{customerData}"
+                    :eventApi="{eventData}"/>
     </v-component>
   <v-snackbar
         :value="alert"
@@ -82,7 +84,7 @@
     },
 
     async mounted () {
-      this.verify()
+      await this.verify()
 
     },
 
@@ -101,12 +103,14 @@
         loadTable: false,
         selectedTab: "customers",
         dialog: false,
+        ready: false,
       }
     },
 
     methods: {
 
     reload (selection) {
+      this.ready = !this.ready;
       console.log(selection);
       switch(selection){
         case 'customers':
@@ -170,6 +174,7 @@
         if (token == null){
           this.$router.push({name: "Login"});
         } else {
+          this.loadTable = ! this.loadTable;
           this.user = this.$store.getters.getUser;
           await this.customers();
           await this.events();
@@ -178,6 +183,8 @@
           this.items = this.customerData;
           await this.getHeaders(this.customerData)
           this.selectedTab = "customers";
+          this.loadTable = ! this.loadTable;
+          this.ready = true;
         }
       },
 
@@ -199,6 +206,7 @@
       },
 
       async refreshCustomers(){
+        this.ready = false
         this.loadTable = !this.loadTable;
         this.items = [];
         await this.customers();
@@ -207,6 +215,7 @@
         this.mapRegistrations()
         this.loadTable = !this.loadTable;
         this.selectedTab = "customers"
+        this.ready = true
 
       },
       
@@ -217,6 +226,7 @@
       },
 
       async refreshEvents(){
+        this.ready = false
         this.loadTable = !this.loadTable;
         this.items = [];
         await this.events();
@@ -225,6 +235,7 @@
         this.items = this.eventData;
         this.loadTable = !this.loadTable;
         this.selectedTab = "events"
+        this.ready = true
       },
 
       async registrations(){
@@ -233,6 +244,7 @@
     },
       
       async refreshRegistrations(){
+        this.ready = false
         this.loadTable = !this.loadTable;
         this.items = [];
         await this.registrations();
@@ -241,6 +253,7 @@
         this.items = this.registrationData;
         this.loadTable = !this.loadTable;
         this.selectedTab = "registrations"
+        this.ready = true
       },
 
 
