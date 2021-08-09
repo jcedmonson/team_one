@@ -1,22 +1,25 @@
 pipeline {
     agent any
+    environment {
+    	PROJ_PATH = '/home/osboxes/Desktop/Project/team_one'
+    }
     stages {
 		// DATA SERVICE    
 	    stage("Checkout DataApi"){
 	    	steps {
 	    	    git branch: 'main',
-				url: '/home/osboxes/Desktop/Project/team_one'
+				url: '${PROJ_PATH}'
 	    	}
 	    }
 	    stage ("Gradle Build - DataApi") {
 	    	steps {
-				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle clean build'
+				sh 'gradle -b ${PROJ_PATH}/project-data-service/build.gradle clean build'
 			}
 	    }
 	    stage ("Gradle Bootjar-Package - DataApi") {
 	    	steps {
 	    		// only builds executables
-				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
+				sh 'gradle -b ${PROJ_PATH}/project-data-service/build.gradle bootjar'
 			}
 	    }
 		stage("Build DataApi"){
@@ -28,8 +31,7 @@ pipeline {
 		stage("Run DataApi"){
 			steps {
 				// run data api in the background
-				//sh 'java -jar /home/osboxes/Desktop/Project/team_one/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &'
-				sh 'echo test'
+				sh 'java -jar ${PROJ_PATH}/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &'
 			}
 		}
 		
@@ -37,17 +39,17 @@ pipeline {
 		stage("Checkout AuthApi"){
 	    	steps {
 	    	    git branch: 'main',
-				url: '/home/osboxes/Desktop/Project/team_one'
+				url: '${PROJ_PATH}'
 	    	}
 	    }
 	    stage ("Gradle Build - AuthApi") {
 	    	steps {
-				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle clean build'
+				sh 'gradle -b ${PROJ_PATH}/project-auth-service/build.gradle clean build'
 			}
 	    }
 	    stage ("Gradle Bootjar-Package - AuthApi") {
 	    	steps {
-				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle bootjar'
+				sh 'gradle -b ${PROJ_PATH}/project-auth-service/build.gradle bootjar'
 			}
 	    }
 		stage("Build AuthApi"){
@@ -58,8 +60,7 @@ pipeline {
 		stage("Run AuthApi"){
 			steps {
 				// run data api in the background
-				//sh 'java -jar /home/osboxes/Desktop/Project/team_one/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &'
-				sh 'echo test'
+				sh 'java -jar ${PROJ_PATH}/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &'
 			}
 		}
 		
@@ -69,15 +70,12 @@ pipeline {
                 sh 'echo "Endpoints Testing - Python MockClient"'
                 sh 'python3 --version'
                 sh '''
-                	java -jar /home/osboxes/Desktop/Project/team_one/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &
-                	java -jar /home/osboxes/Desktop/Project/team_one/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &
                     python3 ~/Desktop/Project/team_one/python/MockClient.py
                 '''
             }
         }
-        // kill process
-        // kill -9 `ps -ef | grep -v grep | grep project-data-service | awk '{print $2}'`
         
+        // kill process
         stage("Stop both AuthApi & DataApi"){
 			steps {
 				// run data api in the background
