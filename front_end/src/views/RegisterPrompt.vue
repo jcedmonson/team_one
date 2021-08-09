@@ -108,6 +108,7 @@
           ).then(response => {
           if (response.status == 200) {
               this.toggleAlert("Account Created");
+              this.clearForm()
               this.close();
             // follow on re-direction to login
           } else {
