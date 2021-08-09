@@ -128,7 +128,7 @@
     methods :{
 
     close(){
-      this.$emit('reload', 'customers')
+      this.$emit('reload', 'registrations')
       this.showDialog = false;
     },
 
@@ -180,7 +180,7 @@
       newData['registration_date'] = this.date;
       newData['notes'] = this.notes;
       let resp = await this.postData(endpoint, JSON.stringify(newData))
-      if (resp == 204){
+      if (resp == 201){
           this.close()
         } else {
           console.log("Registration Stuff Is Wack.")
