@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    environment {
+    	PROJ_PATH = '/home/osboxes/Desktop/Project/team_one'
+    }
+    stages {
+		// DATA SERVICE    
+	    stage("Checkout AuthApi"){
+	    	steps {
+	    	    git branch: 'main',
+				url: "${PROJ_PATH}"
+	    	}
+	    }
+	    stage ("Gradle Build - AuthApi") {
+	    	steps {
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle clean build"
+			}
+	    }
+	    stage ("Gradle Bootjar-Package - AuthApi") {
+	    	steps {
+	    		// only builds executables
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle bootjar"
+			}
+	    }
+	    stage('User Acceptance Test') {
+	    	steps {
+	    		script {
+			    	def response= input message: 'Is this build good to go?',
+			    	parameters: [choice(choices: 'Yes\nNo', description: '', name: 'Pass')]	
+			    	if(response=="Yes") {
+			    		stage('Deploy') {
+			    			sh 'gradle -b project-auth-service/build.gradle build -x test'
+			    		}
+			    	}
+			    }
+	    	}
+		}
+		stage("Build AuthApi"){
+			steps {
+				// builds everything, exept tests in this case
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle build -x test"
+			}
+		}
+		/**
+		stage("Run AuthApi"){
+			steps {
+				// run data api in the background
+				sh "java -jar ${PROJ_PATH}/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &"
+			}
+		}
+        // kill process
+        stage("Stop AuthApi"){
+			steps {
+				// run data api in the background
+				sh 'kill -9 `ps -ef | grep -v grep | grep project-auth-service | awk \'{print $2}\'`'
+			}
+		}
+		***/
+    }
+}
