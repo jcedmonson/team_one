@@ -29,6 +29,7 @@ pipeline {
 			steps {
 				// run data api in the background
 				//sh 'java -jar /home/osboxes/Desktop/Project/team_one/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &'
+				sh 'echo test'
 			}
 		}
 		
@@ -58,6 +59,7 @@ pipeline {
 			steps {
 				// run data api in the background
 				//sh 'java -jar /home/osboxes/Desktop/Project/team_one/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &'
+				sh 'echo test'
 			}
 		}
 		
