@@ -19,13 +19,13 @@ pipeline {
 				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-data-service/build.gradle bootjar'
 			}
 	    }
-		stage('Build DataApi'){
+		stage("Build DataApi"){
 			steps {
 				// builds everything, exept tests in this case
 				sh 'gradle -b project-data-service/build.gradle build -x test'
 			}
 		}
-		stage('Run DataApi'){
+		stage("Run DataApi"){
 			steps {
 				// run data api in the background
 				sh '&>/dev/null java -jar build/libs/project-data-service-0.0.1-SNAPSHOT.jar &'
@@ -49,12 +49,12 @@ pipeline {
 				sh 'gradle -b /home/osboxes/Desktop/Project/team_one/project-auth-service/build.gradle bootjar'
 			}
 	    }
-		stage('Deploy AuthApi'){
+		stage("Build AuthApi"){
 			steps {
 				sh 'gradle -b project-auth-service/build.gradle build -x test'
 			}
 		}	    
-		stage('Deploy AuthApi'){
+		stage("Run AuthApi"){
 			steps {
 				// run data api in the background
 				sh '&>/dev/null java -jar build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &'
@@ -62,7 +62,7 @@ pipeline {
 		}
 		
 		// TESTING			    
-        stage('Endpoints Testing - Python MockClient') {
+        stage("Endpoints Testing - Python MockClient") {
             steps {
                 sh 'echo "Endpoints Testing - Python MockClient"'
                 sh 'python3 --version'
@@ -73,7 +73,7 @@ pipeline {
         }
         // kill process
         // kill -9 `ps -ef | grep -v grep | grep project-data-service | awk '{print $2}'`
-        stage('Stop both AuthApi & DataApi'){
+        stage("Stop both AuthApi & DataApi"){
 			steps {
 				// run data api in the background
 				sh 'kill -9 `ps -ef | grep -v grep | grep project-data-service | awk \'{print $2}\'`'
