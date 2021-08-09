@@ -73,6 +73,7 @@ pipeline {
         }
         // kill process
         // kill -9 `ps -ef | grep -v grep | grep project-data-service | awk '{print $2}'`
+        /**
         stage("Stop both AuthApi & DataApi"){
 			steps {
 				// run data api in the background
@@ -80,7 +81,7 @@ pipeline {
 				sh 'kill -9 `ps -ef | grep -v grep | grep project-auth-service | awk \'{print $2}\'`'
 			}
 		}
-        
+        */
         // TODO: add stages for front end
     }
 }
