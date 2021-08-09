@@ -1,0 +1,89 @@
+pipeline {
+    agent any
+    environment {
+    	PROJ_PATH = '/home/osboxes/Desktop/Project/team_one'
+    }
+    stages {
+		// DATA SERVICE    
+	    stage("Checkout DataApi"){
+	    	steps {
+	    	    git branch: 'main',
+				url: "${PROJ_PATH}"
+	    	}
+	    }
+	    stage ("Gradle Build - DataApi") {
+	    	steps {
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle clean build"
+			}
+	    }
+	    stage ("Gradle Bootjar-Package - DataApi") {
+	    	steps {
+	    		// only builds executables
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle bootjar"
+			}
+	    }
+		stage("Build DataApi"){
+			steps {
+				// builds everything, exept tests in this case
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle build -x test"
+			}
+		}
+		stage("Run DataApi"){
+			steps {
+				// run data api in the background
+				sh "java -jar ${PROJ_PATH}/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &"
+			}
+		}
+		
+		// AUTH SERVICE
+		stage("Checkout AuthApi"){
+	    	steps {
+	    	    git branch: 'main',
+				url: "${PROJ_PATH}"
+	    	}
+	    }
+	    stage ("Gradle Build - AuthApi") {
+	    	steps {
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle clean build"
+			}
+	    }
+	    stage ("Gradle Bootjar-Package - AuthApi") {
+	    	steps {
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle bootjar"
+			}
+	    }
+		stage("Build AuthApi"){
+			steps {
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle build -x test"
+			}
+		}	    
+		stage("Run AuthApi"){
+			steps {
+				// run data api in the background
+				sh "java -jar ${PROJ_PATH}/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &"
+			}
+		}
+		
+		// TESTING			    
+        stage("Endpoints Testing - Python MockClient") {
+            steps {
+                sh 'echo "Endpoints Testing - Python MockClient"'
+                sh 'python3 --version'
+                sh '''
+                    python3 ~/Desktop/Project/team_one/python/MockClient.py
+                '''
+            }
+        }
+        
+        // kill process
+        stage("Stop both AuthApi & DataApi"){
+			steps {
+				// run data api in the background
+				sh 'kill -9 `ps -ef | grep -v grep | grep project-data-service | awk \'{print $2}\'`'
+				sh 'kill -9 `ps -ef | grep -v grep | grep project-auth-service | awk \'{print $2}\'`'
+			}
+		}
+        
+        // TODO: add stages for front end
+    }
+}
