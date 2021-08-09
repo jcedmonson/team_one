@@ -56,7 +56,6 @@
                     :eventApi="{eventData}"/>
     </v-component>
   <v-snackbar
-        :value="alert"
         color=#00BCD4
         dense
         transition="fade-transition"

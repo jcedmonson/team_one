@@ -108,7 +108,7 @@
         let registrations = JSON.parse(JSON.stringify(this.registrationApi.registrationData))
         console.log("Customers");
         let badRegistrations = []
-        let initial = this.eventPath+customer_id
+        let initial = this.customerPath+customer_id
         // check if customer is tied to a specific registration
         for (let i = 0; i < registrations.length; i ++){
           if (JSON.stringify(registrations.at(i)['customer_id']) == JSON.stringify(customer_id)){
