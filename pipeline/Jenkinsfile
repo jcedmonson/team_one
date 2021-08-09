@@ -8,30 +8,30 @@ pipeline {
 	    stage("Checkout DataApi"){
 	    	steps {
 	    	    git branch: 'main',
-				url: '${PROJ_PATH}'
+				url: "${PROJ_PATH}"
 	    	}
 	    }
 	    stage ("Gradle Build - DataApi") {
 	    	steps {
-				sh 'gradle -b ${PROJ_PATH}/project-data-service/build.gradle clean build'
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle clean build"
 			}
 	    }
 	    stage ("Gradle Bootjar-Package - DataApi") {
 	    	steps {
 	    		// only builds executables
-				sh 'gradle -b ${PROJ_PATH}/project-data-service/build.gradle bootjar'
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle bootjar"
 			}
 	    }
 		stage("Build DataApi"){
 			steps {
 				// builds everything, exept tests in this case
-				sh 'gradle -b project-data-service/build.gradle build -x test'
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle build -x test"
 			}
 		}
 		stage("Run DataApi"){
 			steps {
 				// run data api in the background
-				sh 'java -jar ${PROJ_PATH}/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &'
+				sh "java -jar ${PROJ_PATH}/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &"
 			}
 		}
 		
@@ -39,28 +39,28 @@ pipeline {
 		stage("Checkout AuthApi"){
 	    	steps {
 	    	    git branch: 'main',
-				url: '${PROJ_PATH}'
+				url: "${PROJ_PATH}"
 	    	}
 	    }
 	    stage ("Gradle Build - AuthApi") {
 	    	steps {
-				sh 'gradle -b ${PROJ_PATH}/project-auth-service/build.gradle clean build'
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle clean build"
 			}
 	    }
 	    stage ("Gradle Bootjar-Package - AuthApi") {
 	    	steps {
-				sh 'gradle -b ${PROJ_PATH}/project-auth-service/build.gradle bootjar'
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle bootjar"
 			}
 	    }
 		stage("Build AuthApi"){
 			steps {
-				sh 'gradle -b project-auth-service/build.gradle build -x test'
+				sh "gradle -b ${PROJ_PATH}/project-auth-service/build.gradle build -x test"
 			}
 		}	    
 		stage("Run AuthApi"){
 			steps {
 				// run data api in the background
-				sh 'java -jar ${PROJ_PATH}/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &'
+				sh "java -jar ${PROJ_PATH}/project-auth-service/build/libs/project-auth-service-0.0.1-SNAPSHOT.jar &"
 			}
 		}
 		
@@ -79,8 +79,8 @@ pipeline {
         stage("Stop both AuthApi & DataApi"){
 			steps {
 				// run data api in the background
-				sh 'kill -9 `ps -ef | grep -v grep | grep project-data-service | awk \'{print $2}\'`'
-				sh 'kill -9 `ps -ef | grep -v grep | grep project-auth-service | awk \'{print $2}\'`'
+				sh "kill -9 `ps -ef | grep -v grep | grep project-data-service | awk \'{print $2}\'`"
+				sh "kill -9 `ps -ef | grep -v grep | grep project-auth-service | awk \'{print $2}\'`"
 			}
 		}
         
