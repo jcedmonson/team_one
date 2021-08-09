@@ -39,7 +39,12 @@
               :eventApi="{eventData}"
               :registrationApi="{registrationData}"
               />
-      <remove :selection="{item}"/>
+      <remove v-on:reload="reload($event)"
+              :selection="{item}"
+              :selectedTab="{selectedTab}"
+              :customerApi="{customerData}"
+              :eventApi="{eventData}"
+              :registrationApi="{registrationData}"/>
     </template>
     </v-data-table>
     <v-component class="text-right" v-if="ready">
