@@ -69,9 +69,9 @@ pipeline {
             steps {
                 sh 'echo "Endpoints Testing - Python MockClient"'
                 sh 'python3 --version'
-                sh '''
-                    python3 ~/Desktop/Project/team_one/python/MockClient.py
-                '''
+                sh """
+                    python3 ~${PROJ_PATH}/python/MockClient.py
+                """
             }
         }
         

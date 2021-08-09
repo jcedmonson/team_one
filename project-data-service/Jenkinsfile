@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    environment {
+    	PROJ_PATH = '/home/osboxes/Desktop/Project/team_one'
+    }
+    stages {
+		// DATA SERVICE    
+	    stage("Checkout DataApi"){
+	    	steps {
+	    	    git branch: 'main',
+				url: "${PROJ_PATH}"
+	    	}
+	    }
+	    stage ("Gradle Build - DataApi") {
+	    	steps {
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle clean build"
+			}
+	    }
+	    stage ("Gradle Bootjar-Package - DataApi") {
+	    	steps {
+	    		// only builds executables
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle bootjar"
+			}
+	    }
+	    stage('User Acceptance Test') {
+	    	steps {
+	    		script {
+			    	def response= input message: 'Is this build good to go?',
+			    	parameters: [choice(choices: 'Yes\nNo', description: '', name: 'Pass')]	
+			    	if(response=="Yes") {
+			    		stage('Deploy') {
+			    			sh 'gradle -b project-data-service/build.gradle build -x test'
+			    		}
+			    	}
+			    }
+	    	}
+		}
+		stage("Build DataApi"){
+			steps {
+				// builds everything, exept tests in this case
+				sh "gradle -b ${PROJ_PATH}/project-data-service/build.gradle build -x test"
+			}
+		}
+		/**
+		stage("Run DataApi"){
+			steps {
+				// run data api in the background
+				sh "java -jar ${PROJ_PATH}/project-data-service/build/libs/project-data-service-0.0.1-SNAPSHOT.jar &"
+			}
+		}
+        // kill process
+        stage("Stop DataApi"){
+			steps {
+				// run data api in the background
+				sh 'kill -9 `ps -ef | grep -v grep | grep project-data-service | awk \'{print $2}\'`'
+			}
+		}
+		***/
+    }
+}
