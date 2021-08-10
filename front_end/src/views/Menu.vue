@@ -29,7 +29,7 @@
     <v-tab @click="refreshRegistrations"> Registrations </v-tab>
     </v-tabs>
     <!-- Table -->
-    <v-data-table
+    <v-data-table v-if="ready"
     :headers="headers"
     :items="items"
     :items-per-page="10"
