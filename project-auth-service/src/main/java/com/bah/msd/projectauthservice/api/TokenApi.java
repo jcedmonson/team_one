@@ -16,7 +16,7 @@ import com.bah.msd.projectauthservice.token.TokenRequestData;
 @RequestMapping("/token")
 public class TokenApi {
 
-	private static final String authEndpoint = "http://localhost:8080/api/customers/authenticate";
+	private String authEndpoint = getEnvVars();
 
 	JWTUtil jwtUtil = new JWTHelper();
 
@@ -35,4 +35,14 @@ public class TokenApi {
 		}
 		return ResponseEntity.status(401).build();
 	}
+
+	private String getEnvVars(){
+		String apiHost = System.getenv("DATA_IP_ADDRESS");
+		
+		if (apiHost != null){
+			return "http://" + apiHost + "/api/customers/authenticate";
+		}
+		return "http://localhost:8080/api/customers/authenticate";
+	}
+
 }
