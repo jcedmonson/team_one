@@ -9,8 +9,13 @@
         </v-container>
       </v-col>
       <v-col>
-        <v-container class="text-right">
+        <v-container class="text-right" v-if="ready">
           <!-- <v-btn color="white" outlined dense small elevation="2">{{user[0]}}</v-btn> -->
+          <customer v-on:reload="reload($event)"/>
+          <event v-on:reload="reload($event)"/>
+          <registration v-on:reload="reload($event)"
+                        :customerApi="{customerData}"
+                        :eventApi="{eventData}"/>
           <profile/>
         </v-container>
       </v-col>
@@ -48,13 +53,6 @@
               :registrationApi="{registrationData}"/>
     </template>
     </v-data-table>
-    <v-component class="text-right" v-if="ready">
-      <customer v-on:reload="reload($event)"/>
-      <event v-on:reload="reload($event)"/>
-      <registration v-on:reload="reload($event)"
-                    :customerApi="{customerData}"
-                    :eventApi="{eventData}"/>
-    </v-component>
   <v-snackbar
         color=#00BCD4
         dense
@@ -74,7 +72,7 @@
   import registration from '../components/Registration.vue'
   import profile from '../components/Profile.vue'
   export default {
-    name: 'simplename',
+    name: 'menu',
     props: {},
 
     components : {

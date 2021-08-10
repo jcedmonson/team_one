@@ -47,7 +47,7 @@
           <v-row>
           <v-col>
             <v-container>
-              <v-btn outlined color=#00BCD4 @click="clearForm">
+              <v-btn outlined color=#00BCD4 @click="clearCustomerForm">
                 <v-icon>delete</v-icon>
               </v-btn>
             </v-container>
@@ -94,7 +94,7 @@
           <v-row>
           <v-col>
             <v-container>
-              <v-btn outlined color=#00BCD4 @click="clearForm">
+              <v-btn outlined color=#00BCD4 @click="clearEventForm">
                 <v-icon>delete</v-icon>
               </v-btn>
             </v-container>
@@ -184,7 +184,7 @@
           <v-row>
           <v-col>
             <v-container>
-              <v-btn outlined color=#00BCD4 @click="clearForm">
+              <v-btn outlined color=#00BCD4 @click="clearRegistrationForm">
                 <v-icon>delete</v-icon>
               </v-btn>
             </v-container>
@@ -232,6 +232,7 @@
           notes: null,
           date: null,
           showDialog: false,
+          menu: false,
       } 
     },
 
@@ -390,7 +391,26 @@
         }
       })
       return result;
-    }
+    },
+
+    clearCustomerForm(){
+          this.username = "";
+          this.email = "";
+          this.password = "";
+      },
+
+    clearEventForm(){
+          this.title = "";
+          this.description = "";
+          this.code = "";
+      },
+    clearRegistrationForm(){
+          this.customer = "";
+          this.event = "";
+          this.notes = "";
+          this.menu = "";
+          this.date = "";
+    },
   }
 }
 </script>

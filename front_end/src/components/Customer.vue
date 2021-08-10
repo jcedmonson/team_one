@@ -2,9 +2,9 @@
     <v-dialog max-width="500px" outlined v-model="showDialog">
      <template v-slot:activator="{ on }">
        <!-- <v-btn  v-on="on" class="success">Add New Project</v-btn> -->
-       <v-btn color=#00BCD4 text small v-on="on">
+       <v-btn text small v-on="on" class="white--text Subtitle 2">
            <v-icon>add</v-icon>
-           <v-text class="cyan--text Subtitle 2">customer</v-text>
+           customer
        </v-btn>
      </template>
     <v-card>

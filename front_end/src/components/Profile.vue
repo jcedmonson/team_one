@@ -2,18 +2,18 @@
     <v-dialog max-width="500px" outlined v-model="showDialog">
      <template v-slot:activator="{ on }">
        <!-- <v-btn  v-on="on" class="success">Add New Project</v-btn> -->
-       <v-btn color=white text small v-on="on" name="Registration">
+       <v-btn text small v-on="on" class="white--text Subtitle 2">
            <v-icon>account_box</v-icon>
-           <v-text class="white--text Subtitle 2">Profile</v-text>
+           profile
        </v-btn>
     </template>
     <v-card>
       <v-container class="window">
           <v-row class="text-center">
               <v-col>
-                <v-btn color=red outlined @click="logout">
+                <v-btn outlined @click="logout" class="red--text Subtitle 2">
                 <v-icon>logout</v-icon>
-                <v-text class="white--text Subtitle 2">Logout</v-text>
+                Logout
                 </v-btn>
               </v-col>
           </v-row>
