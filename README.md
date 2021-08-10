@@ -2,11 +2,11 @@
 ## Docker Setup Instructions
 
 The app uses a Docker network to communicated with the containers.\
-Here are some instructions for setup.\
+Here are some instructions for setup.
 
 ## Build the Data Service
 docker -t data_service build .\
-docker run -d --name data_service -p 8080:8080 data_service\
+docker run -d --name data_service -p 8080:8080 data_service
 
 ## Create Network, Connect Data Service, Get Data Service IP
 docker network create mccnetwork\
