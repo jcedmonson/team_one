@@ -106,6 +106,8 @@
 
       async removeCustomer(customer_id){
         let registrations = JSON.parse(JSON.stringify(this.registrationApi.registrationData))
+        console.log(registrations)
+        console.log(typeof(registrations));
         console.log("Customers");
         let badRegistrations = []
         let initial = this.customerPath+customer_id
