@@ -1,6 +1,6 @@
 package com.bah.msd.projectdataservice.domain;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +17,14 @@ public class Registration {
 	private long id;
 	private long event_id;
 	private long customer_id;
-	private LocalDate registration_date;
+	private Date registration_date;
 	private String notes;
 
 	public Registration() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registration(long id, long event_id, long customer_id, LocalDate registration_date, String notes) {
+	public Registration(long id, long event_id, long customer_id, Date registration_date, String notes) {
 		super();
 		this.id = id;
 		this.event_id = event_id;
@@ -57,11 +57,11 @@ public class Registration {
 		this.customer_id = customer_id;
 	}
 
-	public LocalDate getRegistration_date() {
+	public Date getRegistration_date() {
 		return registration_date;
 	}
 
-	public void setRegistration_date(LocalDate registration_date) {
+	public void setRegistration_date(Date registration_date) {
 		this.registration_date = registration_date;
 	}
 
