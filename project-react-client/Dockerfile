@@ -39,4 +39,6 @@ COPY ./default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 ARG dataservice=localhost:8080
 ENV DATA_IP_ADDRESS=$dataservice
+ARG authservice=localhost:8081
+ENV AUTH_IP_ADDRESS=$authservice
 CMD ["nginx", "-g", "daemon off;"]
