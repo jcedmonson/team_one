@@ -5,7 +5,7 @@ function determineProxy(){
     let auth_ip = process.env['AUTH_IP_ADDRESS'];
     let data_ip = process.env['DATA_IP_ADDRESS'];
     if (auth_ip && data_ip) {
-        return (auth_ip, data_ip);
+        return [auth_ip, data_ip];
     } else {
         return ['http://localhost:8080/', 'http://localhost:8081/'];
     }
