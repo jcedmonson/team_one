@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "8347d353-43ea-41c1-91fa-4050be8f85e5",
+		"name": "Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Token of non-existing user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc1400ff-344f-403f-9c32-0ce974d76870",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "abcsfdgsdfgdfgdgs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"neveruse\",\n\t\"password\":\"pass\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/account/token",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"account",
+						"token"
+					]
+				},
+				"description": "localhost:8081/account/token\nGet Token of non-existant user"
+			},
+			"response": []
+		},
+		{
+			"name": "New User (testnew) Registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7de86810-5232-4423-b45f-f636c648ff2d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"testnew\",\n\t\"email\":\"testnew@gmail.com\",\n\t\"password\":\"testnew\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/account/register/",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"account",
+						"register",
+						""
+					]
+				},
+				"description": "POST - localhost:8081/account/register/\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Token of existing user (testnew)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc1400ff-344f-403f-9c32-0ce974d76870",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Token was returned\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"token\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "abcsfdgsdfgdfgdgs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"name\":\"testnew\", \n\t\"password\":\"testnew\" \n}"
+				},
+				"url": {
+					"raw": "localhost:8081/account/token",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"account",
+						"token"
+					]
+				},
+				"description": "POST - localhost:8081/account/token\nGet Token of existing user (test4)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customers w/out Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bb0a0ef-e61d-42b2-b2c6-3f73c9c9b9be",
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/customers",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers"
+					]
+				},
+				"description": "localhost:8080/api/customers\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer #1 w/out Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bb0a0ef-e61d-42b2-b2c6-3f73c9c9b9be",
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/customers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"1"
+					]
+				},
+				"description": "localhost:8080/api/customers\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customers with Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bb0a0ef-e61d-42b2-b2c6-3f73c9c9b9be",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Bruce User is in list\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bruce\");",
+							"});",
+							"pm.test(\"Paul User is in list\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Paul\");",
+							"});",
+							"pm.test(\"Rick User is in list\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Rick\");",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(Object.keys(jsonData).length).to.be.above(2);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcGl1c2VyIiwiaXNzIjoibWVAbWUuY29tIiwic2NvcGVzIjoiY29tLmJhaC5tc2QucHJvamVjdGRhdGFzZXJ2aWNlIiwiZXhwIjoxNjI4NTYxMjUyfQ.zFrWfEHIF1iIAT74uLJQCAy7obY6zbDSEzkWzreqhr4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/customers/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						""
+					]
+				},
+				"description": "localhost:8080/api/customers\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer (Paul) with Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8bb0a0ef-e61d-42b2-b2c6-3f73c9c9b9be",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Bruce User is in list\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Bruce\");",
+							"});",
+							"pm.test(\"Paul User is not in list\", function () {",
+							"    pm.expect(pm.response.text()).to.not.include(\"Paul\");",
+							"});",
+							"pm.test(\"Rick User is not in list\", function () {",
+							"    pm.expect(pm.response.text()).to.not.include(\"Rick\");",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    //pm.expect(jsonData.value).to.eql(100);",
+							"    pm.expect(Object.keys(jsonData).length).to.eql(4);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcGl1c2VyIiwiaXNzIjoibWVAbWUuY29tIiwic2NvcGVzIjoiY29tLmJhaC5tc2QucHJvamVjdGRhdGFzZXJ2aWNlIiwiZXhwIjoxNjI4NTYxMjUyfQ.zFrWfEHIF1iIAT74uLJQCAy7obY6zbDSEzkWzreqhr4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/api/customers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customers",
+						"1"
+					]
+				},
+				"description": "localhost:8080/api/customers\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "df07309d-72f4-4131-9c24-a35dfc16cd8b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"fox\",\n\t\"email\":\"fox@webpage.com\",\n\t\"password\":\"foxy\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/account/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"account",
+						"register"
+					]
+				},
+				"description": "http://localhost:8081/account/register"
+			},
+			"response": []
+		}
+	]
+}
